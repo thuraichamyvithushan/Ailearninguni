@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { assert } from "../utils/errors.js";
+import { publicAppUrl } from "../config/deployment.js";
 export async function getCurriculum(db, courseId) {
   const modules = (await db.list(`courses/${courseId}/modules`)).sort(
     (a, b) => a.order - b.order,
@@ -166,7 +167,7 @@ export async function issueCertificate(db, userId, courseId) {
     courseId,
     courseTitle: course.title,
     completionDate: new Date().toISOString(),
-    verificationUrl: `${process.env.PUBLIC_APP_URL || "http://localhost:5173"}/certificate/${id}`,
+    verificationUrl: `${publicAppUrl}/certificate/${id}`,
     valid: true,
   };
   await db.put("certificates", id, certificate);

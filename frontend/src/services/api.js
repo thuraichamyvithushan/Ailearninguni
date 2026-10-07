@@ -1,7 +1,11 @@
 import { createApiClient } from "./apiClient";
 import { firebaseAuth, authMode } from "./firebase";
+import { getFrontendApiUrl } from "../../../deployment.config.js";
 export const api = createApiClient({
-  baseURL: import.meta.env.VITE_API_URL || "/api",
+  baseURL: getFrontendApiUrl({
+    production: import.meta.env.PROD,
+    override: import.meta.env.VITE_API_URL,
+  }),
 });
 api.interceptors.request.use(async (config) => {
   const token =

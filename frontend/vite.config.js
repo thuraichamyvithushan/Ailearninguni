@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import { deploymentConfig } from "../deployment.config.js";
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
@@ -29,8 +30,13 @@ export default defineConfig({
   },
   server: {
     host: "localhost",
-    port: 5173,
+    port: Number(new URL(deploymentConfig.local.frontendUrl).port),
     strictPort: true,
-    proxy: { "/api": "http://localhost:4000" },
+    proxy: { "/api": deploymentConfig.local.backendUrl },
+  },
+  preview: {
+    host: "localhost",
+    port: Number(new URL(deploymentConfig.local.previewUrl).port),
+    strictPort: true,
   },
 });

@@ -3,6 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import router from "./routes/api.js";
+import { clientOrigins } from "./config/deployment.js";
 export const app = express();
 // Vercel forwards requests through its HTTPS proxy.
 if (process.env.VERCEL === "1") app.set("trust proxy", 1);
@@ -10,10 +11,7 @@ app.disable("x-powered-by");
 app.use(helmet());
 app.use(
   cors({
-    origin: (process.env.CLIENT_ORIGIN || "http://localhost:5173")
-      .split(",")
-      .map((origin) => origin.trim())
-      .filter(Boolean),
+    origin: clientOrigins,
   }),
 );
 app.use(express.json({ limit: "512kb" }));

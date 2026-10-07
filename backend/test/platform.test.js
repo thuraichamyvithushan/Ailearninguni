@@ -63,6 +63,37 @@ test("public catalog and health are available", async () => {
   assert.equal((await request("/health")).data.authMode, "demo");
   assert.equal((await request("/courses")).data.length, 6);
 });
+
+test("CORS supports local and Vercel frontends and authenticated preflight", async () => {
+  for (const origin of [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:4173",
+    "https://ailearninguni.vercel.app",
+  ]) {
+    const response = await fetch(base + "/health", {
+      headers: { Origin: origin },
+    });
+    assert.equal(response.headers.get("access-control-allow-origin"), origin);
+  }
+  const preflight = await fetch(base + "/me", {
+    method: "OPTIONS",
+    headers: {
+      Origin: "https://ailearninguni.vercel.app",
+      "Access-Control-Request-Method": "PUT",
+      "Access-Control-Request-Headers": "authorization,content-type",
+    },
+  });
+  assert.equal(preflight.status, 204);
+  assert.match(
+    preflight.headers.get("access-control-allow-headers"),
+    /authorization/,
+  );
+  const unlisted = await fetch(base + "/health", {
+    headers: { Origin: "https://unlisted.example" },
+  });
+  assert.equal(unlisted.headers.get("access-control-allow-origin"), null);
+});
 test("registration cannot assign an admin role", async () => {
   const me = await request("/me", { token: student });
   assert.equal(me.data.role, "student");
