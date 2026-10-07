@@ -21,6 +21,7 @@ export default function PublicLayout() {
               ["/learning-path", "Learning paths"],
               ["/pricing", "Pricing"],
               ["/about", "About us"],
+              ["/contact", "Contact"],
             ].map(([to, label]) => (
               <NavLink key={to} to={to} onClick={() => setOpen(false)}>
                 {label}
