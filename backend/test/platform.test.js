@@ -31,7 +31,7 @@ before(async () => {
   process.env.AUTH_MODE = "demo";
   process.env.DEMO_DATA_FILE = join(folder, "demo.json");
   process.env.UPLOADS_DIR = join(folder, "uploads");
-  const { app } = await import("../src/app.js");
+  const { default: app } = await import("../api/index.js");
   const { seed } = await import("../src/utils/seed.js");
   await seed();
   server = app.listen(0, "localhost");

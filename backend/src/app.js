@@ -44,5 +44,5 @@ app.use((error, _req, res, _next) => {
         : error.message,
   });
 });
-// Vercel's Express preset detects this entry point; local server.js reuses it.
+// Shared by the Vercel function and the local server.
 export default app;
