@@ -57,7 +57,7 @@ export function Brand() {
       <img 
         src="/logo.png" 
         alt="Ai Learning Uni" 
-        style={{ height: "110px", width: "auto", margin: "-35px 0 -35px -15px", maxWidth: "none" }} 
+        style={{ height: "110px", width: "auto", margin: "-35px 0 -35px -15px", maxWidth: "none", mixBlendMode: "screen" }} 
       />
     </Link>
   );

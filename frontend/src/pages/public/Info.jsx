@@ -148,8 +148,9 @@ export function Contact({ portal = false }) {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  return (
-    <div className={portal ? "page-content" : "container public-section"}>
+
+  const content = (
+    <div>
       <div className="page-heading">
         <div>
           <div className="eyebrow">LET’S KEEP THE CONVERSATION GOING</div>
@@ -222,6 +223,52 @@ export function Contact({ portal = false }) {
           </p>
         )}
       </form>
+    </div>
+  );
+
+  return (
+    <div className={portal ? "page-content" : "container public-section"}>
+      {portal ? (
+        content
+      ) : (
+        <div className="hero-grid" style={{ alignItems: "center" }}>
+          {content}
+          <div
+            className="hero-visual"
+            aria-label="An interconnected globe representing AI learning"
+          >
+            <span className="hero-coordinate">
+              EXPLORING NEW POSSIBILITIES · 01 / ∞
+            </span>
+            <div className="orb-ring second" />
+            <div className="atlas-orb">
+              {[0, 1, 2, 3].map((i) => (
+                <div key={i} className="orb-latitude" />
+              ))}
+              <div className="orb-longitude" />
+              <div className="orb-longitude" />
+              <span className="orb-spark">✦</span>
+            </div>
+            <div className="orb-ring" />
+            <div className="float-card one">
+              <span>
+                <BookOpen size={19} />
+              </span>
+              <div>
+                Learn at your pace.<small>Courses and practical lessons</small>
+              </div>
+            </div>
+            <div className="float-card two">
+              <span>
+                <Award size={20} />
+              </span>
+              <div>
+                Build useful skills.<small>Projects. Practice. Progress.</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -63,6 +63,12 @@ export default function Home() {
 
   return (
     <>
+      <div className="cinematic-bg">
+        <div className="cinematic-glow one"></div>
+        <div className="cinematic-glow two"></div>
+        <div className="cinematic-glow three"></div>
+        <div className="cinematic-noise"></div>
+      </div>
       <section className="hero">
         <div className="container hero-grid">
           <motion.div
