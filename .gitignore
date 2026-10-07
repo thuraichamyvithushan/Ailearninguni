@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.npm-cache/
+*.log
+.env*
+!.env.example
+backend/.data/
+backend/uploads/
+*service-account*.json
+*.pem
+*.key
+*.p12
+*.pfx
+.vercel/

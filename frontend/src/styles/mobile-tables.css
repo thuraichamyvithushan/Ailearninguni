@@ -1,0 +1,78 @@
+@media (max-width: 700px) {
+  .table-card {
+    overflow: visible;
+    background: none;
+    border: 0;
+  }
+  .table-card table {
+    min-width: 0;
+    white-space: normal;
+  }
+  .table-card thead {
+    display: none;
+  }
+  .table-card tbody tr {
+    display: block;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 15px;
+    padding: 18px;
+  }
+  .table-card td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    border: 0;
+    padding: 10px 0;
+    text-align: right;
+    font-size: 11px;
+  }
+  .table-card td::before {
+    content: attr(data-label);
+    color: var(--muted);
+    text-align: left;
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+  .table-card td:first-child {
+    display: block;
+    text-align: left;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 8px;
+  }
+  .table-card td:first-child::before {
+    display: none;
+  }
+  .table-card td:first-child strong {
+    font-size: 14px;
+    margin-bottom: 7px;
+  }
+  .table-card td small {
+    display: block !important;
+  }
+  .table-card td .table-actions {
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+  .table-card td:last-child {
+    padding-bottom: 0;
+  }
+  .table-card td:last-child:has(> .table-actions)::before {
+    display: none;
+  }
+  .table-card td:last-child:has(> .table-actions) {
+    justify-content: flex-start;
+  }
+  .table-card td > small {
+    margin-left: auto;
+  }
+  .table-card td:nth-child(2):has(> small) {
+    flex-wrap: wrap;
+  }
+  .table-card td:nth-child(2):has(> small) > small {
+    width: 100%;
+  }
+}

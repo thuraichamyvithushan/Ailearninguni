@@ -1,0 +1,13 @@
+node_modules/
+frontend/dist/
+.git/
+.vercel/
+.npm-cache/
+.env*
+frontend/.env*
+backend/.env*
+backend/.data/
+backend/uploads/
+backend/test/
+*service-account*.json
+*.log

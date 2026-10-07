@@ -1,0 +1,12 @@
+import { Router } from "express";
+import { authenticate, adminOnly } from "../middleware/auth.js";
+import publicRoutes from "./public.js";
+import studentRoutes from "./student.js";
+import adminRoutes from "./admin.js";
+const router = Router();
+router.use(publicRoutes);
+router.use(authenticate);
+router.use(studentRoutes);
+router.use("/admin", adminOnly);
+router.use(adminRoutes);
+export default router;

@@ -1,0 +1,38 @@
+import express from "express";
+import cors from "cors";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+import router from "./routes/api.js";
+export const app = express();
+app.disable("x-powered-by");
+app.use(helmet());
+app.use(
+  cors({
+    origin: (process.env.CLIENT_ORIGIN || "http://localhost:5173").split(","),
+  }),
+);
+app.use(express.json({ limit: "512kb" }));
+app.use(
+  "/api",
+  rateLimit({
+    windowMs: 60000,
+    limit: 250,
+    standardHeaders: "draft-7",
+    legacyHeaders: false,
+    message: { error: "Too many requests. Please wait a moment." },
+  }),
+  router,
+);
+app.use((_req, res) => res.status(404).json({ error: "Endpoint not found." }));
+app.use((error, _req, res, _next) => {
+  const status = error.status || (error.code === "LIMIT_FILE_SIZE" ? 400 : 500);
+  if (status === 500) console.error(error);
+  res
+    .status(status)
+    .json({
+      error:
+        status === 500
+          ? "Something went wrong. Please try again."
+          : error.message,
+    });
+});
