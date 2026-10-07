@@ -15,6 +15,13 @@ app.use(
   }),
 );
 app.use(express.json({ limit: "512kb" }));
+app.get("/", (_req, res) =>
+  res.json({
+    service: "Ai Learning Uni API",
+    status: "ok",
+    health: "/api/health",
+  }),
+);
 app.use(
   "/api",
   rateLimit({

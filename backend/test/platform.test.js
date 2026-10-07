@@ -64,6 +64,16 @@ test("public catalog and health are available", async () => {
   assert.equal((await request("/courses")).data.length, 6);
 });
 
+test("opening the backend domain directly returns API status", async () => {
+  const response = await fetch(base.replace(/\/api$/, "/"));
+  assert.equal(response.status, 200);
+  assert.deepEqual(await response.json(), {
+    service: "Ai Learning Uni API",
+    status: "ok",
+    health: "/api/health",
+  });
+});
+
 test("CORS supports local and Vercel frontends and authenticated preflight", async () => {
   for (const origin of [
     "http://localhost:5173",
