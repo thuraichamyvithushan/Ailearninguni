@@ -51,13 +51,17 @@ export function ToastProvider({ children }) {
   );
 }
 export const useToast = () => useContext(ToastContext);
-export function Brand() {
+export function Brand({ className = "" }) {
   return (
-    <Link to="/" className="brand" aria-label="Ai Learning Uni home" style={{ display: 'flex', alignItems: 'center', height: '40px' }}>
-      <img 
-        src="/logo.png" 
-        alt="Ai Learning Uni" 
-        style={{ height: "110px", width: "auto", margin: "-35px 0 -35px -15px", maxWidth: "none", mixBlendMode: "screen" }} 
+    <Link
+      to="/"
+      className={`brand ${className}`.trim()}
+      aria-label="Ai Learning Uni home"
+    >
+      <img
+        src="/logo.png"
+        alt="Ai Learning Uni"
+        className="brand-logo"
       />
     </Link>
   );

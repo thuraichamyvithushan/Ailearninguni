@@ -134,6 +134,26 @@ select option {
   font-weight: 500;
   letter-spacing: -1px;
   white-space: nowrap;
+  text-decoration: none;
+}
+.brand-logo {
+  display: block;
+  height: 90px;
+  width: auto;
+  max-width: 100%;
+  margin: -25px 0 -25px -12px;
+  mix-blend-mode: screen;
+  object-fit: contain;
+}
+.public-header .brand-logo {
+  height: 105px;
+  margin: -32px 0 -32px -15px;
+  max-width: none;
+}
+.public-footer .brand-logo {
+  height: 65px;
+  max-width: 190px;
+  margin: -14px 0 -14px -10px;
 }
 .brand strong {
   font-weight: 800;
@@ -1171,14 +1191,22 @@ select option {
   z-index: 60;
 }
 .sidebar-brand {
-  padding: 0 10px;
+  padding: 0 4px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  min-height: 40px;
 }
 .sidebar-brand .brand {
-  font-size: 17px;
-  gap: 6px;
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+}
+.sidebar-brand .brand-logo {
+  height: 52px;
+  max-width: 175px;
+  margin: -8px 0 -8px -6px;
+  object-fit: contain;
 }
 .workspace-label {
   font-size: 8px;
