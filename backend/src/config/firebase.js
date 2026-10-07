@@ -18,8 +18,26 @@ if (mode === "demo" && process.env.NODE_ENV === "production")
 if (mode === "firebase" && !getApps().length) {
   // Hosted environments can supply credentials without a local JSON file.
   const account = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
+  
+  let credential;
+  if (account) {
+    try {
+      credential = cert(JSON.parse(account));
+    } catch (err) {
+      console.error("Failed to parse FIREBASE_SERVICE_ACCOUNT_JSON. Make sure it's valid JSON.");
+      throw new Error("Invalid FIREBASE_SERVICE_ACCOUNT_JSON");
+    }
+  } else if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
+    credential = applicationDefault();
+  } else if (process.env.NODE_ENV !== "production") {
+    // Fallback for local development if gcloud CLI is configured
+    credential = applicationDefault();
+  } else {
+    throw new Error("Missing Firebase credentials. Please set FIREBASE_SERVICE_ACCOUNT_JSON environment variable in Vercel.");
+  }
+
   initializeApp({
-    credential: account ? cert(JSON.parse(account)) : applicationDefault(),
+    credential,
     projectId: process.env.FIREBASE_PROJECT_ID,
     storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
   });

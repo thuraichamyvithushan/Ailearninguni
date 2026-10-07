@@ -53,13 +53,12 @@ export function ToastProvider({ children }) {
 export const useToast = () => useContext(ToastContext);
 export function Brand() {
   return (
-    <Link to="/" className="brand" aria-label="Ai Learning Uni home">
-      <span className="brand-mark">
-        <Orbit size={25} />
-      </span>
-      <span className="brand-name">
-        Ai <strong>Learning Uni</strong>
-      </span>
+    <Link to="/" className="brand" aria-label="Ai Learning Uni home" style={{ display: 'flex', alignItems: 'center', height: '40px' }}>
+      <img 
+        src="/logo.png" 
+        alt="Ai Learning Uni" 
+        style={{ height: "110px", width: "auto", margin: "-35px 0 -35px -15px", maxWidth: "none" }} 
+      />
     </Link>
   );
 }
