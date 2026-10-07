@@ -9,6 +9,10 @@ before(async () => {
   server = createServer((req, res) => {
     const count = (requests.get(req.url) || 0) + 1;
     requests.set(req.url, count);
+    if (req.url.startsWith("/api/")) {
+      res.setHeader("content-type", "application/json");
+      return res.end(JSON.stringify({ url: req.url }));
+    }
     if (req.url === "/recover" && count > 1) {
       res.setHeader("content-type", "application/json");
       return res.end(JSON.stringify([{ id: "course" }]));
@@ -48,4 +52,22 @@ test("course writes, conflicts, and API errors are not retried", async () => {
   assert.equal(requests.get("/write"), 1);
   assert.equal(requests.get("/conflict"), 1);
   assert.equal(requests.get("/api-error"), 1);
+});
+
+test("separately hosted API keeps upload and certificate URLs on the backend", async () => {
+  for (const suffix of ["/api", "/api/"]) {
+    const remote = createApiClient({
+      baseURL: client.defaults.baseURL + suffix,
+      proxy: false,
+    });
+    assert.equal((await remote.get("/courses")).data.url, "/api/courses");
+    assert.equal(
+      (await remote.get("/api/uploads/resource?download=1")).data.url,
+      "/api/uploads/resource?download=1",
+    );
+    assert.equal(
+      (await remote.get("/certificates/example/pdf")).data.url,
+      "/api/certificates/example/pdf",
+    );
+  }
 });

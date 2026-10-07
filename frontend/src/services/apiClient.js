@@ -2,6 +2,16 @@ import axios from "axios";
 
 export function createApiClient({ retryDelayMs = 750, ...options } = {}) {
   const client = axios.create({ timeout: 30000, ...options });
+  client.interceptors.request.use((config) => {
+    // Stored upload links include /api; baseURL already supplies that prefix.
+    if (
+      /\/api\/?$/.test(config.baseURL || "") &&
+      /^\/api(?:\/|$)/.test(config.url || "")
+    ) {
+      config.url = config.url.slice(4) || "/";
+    }
+    return config;
+  });
   client.interceptors.response.use(undefined, async (error) => {
     const config = error.config;
     const status = error.response?.status;
